@@ -1,5 +1,10 @@
 # Introduction
-This is an implementation of a distributed system using .Net Core
+This is an implementation of a distributed system using .Net Core.
+
+The business is quite simple. There are just 2 entities. The first is **Experiment** and the second is **Method**. An experiment can have 0 or many methods, and a method can have 0 or many experiments.
+
+# Architecture
+![alt text](./Assets/Architecture.png "Architecture")
 
 # Technologies
 * Domain-Driven Design
