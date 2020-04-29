@@ -31,21 +31,21 @@ Let's assume a user wants to create a new experiment. This type of request only 
 ### **What happens when a user sends a request?**
 When the intended microservice receives the request, it creates a new command, publishes it to a Kafka topic and responds back to the client right away stating that the request is now being processed.
 
-**_Example:_** The **Experiment microservice** will receive the request, creates a command with the name **CreateExperiment** and publishes it to the **Experiments** Kafka topic.
+**Example:** The **Experiment microservice** will receive the request, creates a command with the name **CreateExperiment** and publishes it to the **Experiments** Kafka topic.
 
-### **Who listens to commands in order to process it?**
+### **Who listens to commands in order to process them?**
 Each microservice has a Kafka consumer running in the background, listening to any messages it might be interested in. 
 
-**_Example:_** The **Experiment microservice** will retrieve a command named **CreateExperiment**. And it will pass it to its corresponding handler, which in turn, is responsible for executing the command.
+**Example:** The **Experiment microservice** will retrieve a command named **CreateExperiment**. And it will pass it to its corresponding handler, which in turn, is responsible for executing the command.
 
 ### **What happens after a handler handles a command?**
 When the handler finishes executing a command. It publishes an event with either success or failure to a Kafka topic.
 
-**_Example:_** After executing the handling logic, our microservice will publish either **ExperimentCreated** event or **ExperimentCreationFailed** event to the **Experiments** Kafka topic.
+**Example:** After executing the handling logic, our microservice will publish either **ExperimentCreated** event or **ExperimentCreationFailed** event to the **Experiments** Kafka topic.
 
 _At this point, the microservice has completed its job._
 
 ### **So how will the client receive the response?**
 Now the client needs to be notified that his/her request has completed. That's the purpose of the notification server. The notification server's job is to listen for events and push a response accordingly to a specific user using sockets.
 
-**_Example:_** Our notification server will listen for either **ExperimentCreated** event or **ExperimentCreationFailed** event, and will push the result to the client using SignalR.
+**Example:** Our notification server will listen for either **ExperimentCreated** event or **ExperimentCreationFailed** event, and will push the result to the client using SignalR.
